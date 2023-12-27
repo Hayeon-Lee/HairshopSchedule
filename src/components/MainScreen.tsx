@@ -17,7 +17,6 @@ const MainScreen = () => {
   return (
     <div className='Container'>
       <div className='Wrapper'>
-        <img className='logoImg' src='img/logo.png' />
         <button type='button' onClick={logout}>
           로그아웃하기
         </button>
