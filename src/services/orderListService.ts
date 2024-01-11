@@ -1,8 +1,12 @@
 import axios from 'axios';
 import { SERVER_URL } from '../data/serverData';
+import { OrderListResponse } from '../type/orderListServiceType';
 
 class orderListService {
-  async getOrderList(startDate: string, endDate: string) {
+  async getOrderList(
+    startDate: string,
+    endDate: string
+  ): Promise<OrderListResponse> {
     try {
       const accessToken = localStorage.getItem('accessToken');
       const memberId = localStorage.getItem('memberId');
@@ -11,11 +15,12 @@ class orderListService {
         `${SERVER_URL}/api/orders/${memberId}/period?startDate=${startDate}&endDate=${endDate}`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            Authorization: accessToken,
           },
         }
       );
-      return response;
+      return response.data;
     } catch (e) {
       return e;
     }
