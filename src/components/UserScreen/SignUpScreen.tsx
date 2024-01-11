@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userService } from '../../services/userService';
-import './SignUpScreenCss.css';
+import styles from './SignUpScreenCss.module.css';
 import * as React from 'react';
 
 const SignUpScreen = () => {
@@ -56,12 +56,12 @@ const SignUpScreen = () => {
   };
 
   return (
-    <div className='Container'>
-      <div className='Wrapper'>
+    <div className={styles.Container}>
+      <div className={styles.Wrapper}>
         <h1>회원 가입</h1>
         <h4>OrderCount에 오신 것을 환영합니다.</h4>
         <input
-          className='input'
+          className={styles.input}
           type='text'
           name='id'
           placeholder='아이디'
@@ -69,7 +69,7 @@ const SignUpScreen = () => {
           onChange={handleChange}
         />
         <input
-          className='input'
+          className={styles.input}
           type='text'
           name='pw'
           value={userPW}
@@ -77,22 +77,30 @@ const SignUpScreen = () => {
           onChange={handleChange}
         />
         {errorMsg === null ? null : (
-          <span className='errorMsg'> {errorMsg}</span>
+          <span className={styles.errorMsg}> {errorMsg}</span>
         )}
         {btnAvailable === true ? (
-          <button className='SignUpBtn' type='button' onClick={successSignUp}>
+          <button
+            className={styles.SignUpBtn}
+            type='button'
+            onClick={successSignUp}
+          >
             회원가입
           </button>
         ) : (
           <button
-            className='SignUpBtnFail'
+            className={styles.SignUpBtnFail}
             type='button'
             onClick={() => setErrorMsg('로그인 정보를 입력하세요.')}
           >
             회원가입
           </button>
         )}
-        <button className='MoveToLogin' type='button' onClick={moveToLogin}>
+        <button
+          className={styles.MoveToLogin}
+          type='button'
+          onClick={moveToLogin}
+        >
           로그인으로 돌아가기
         </button>
       </div>
