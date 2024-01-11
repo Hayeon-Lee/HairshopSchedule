@@ -1,5 +1,5 @@
-import axios from "axios";
-import { SERVER_URL } from "../data/serverData";
+import axios from 'axios';
+import { SERVER_URL } from '../data/serverData';
 
 class userService {
   async signUp(email: string, password: string) {
@@ -13,7 +13,7 @@ class userService {
         JSON.stringify(data),
         {
           headers: {
-            "Content-Type": `application/json`,
+            'Content-Type': `application/json`,
           },
         }
       );
@@ -34,7 +34,7 @@ class userService {
         JSON.stringify(data),
         {
           headers: {
-            "Content-Type": `application/json`,
+            'Content-Type': `application/json`,
           },
         }
       );
@@ -51,10 +51,18 @@ class userService {
     localStorage.setItem('loginStatus', 'true');
   }
 
-  async deleteInfo(){
+  async deleteInfo() {
     await localStorage.clear();
-    if(localStorage.getItem('loginStatus')===null) return true;
+    if (localStorage.getItem('loginStatus') === null) return true;
     else return false;
+  }
+
+  async getAccessToken() {
+    return localStorage.getItem('accessToken');
+  }
+
+  async getMemberId() {
+    return localStorage.getItem('memberId');
   }
 }
 
