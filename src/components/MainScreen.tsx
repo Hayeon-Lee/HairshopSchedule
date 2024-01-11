@@ -7,89 +7,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { orderListService } from '../services/orderListService';
 import { userService } from '../services/userService';
 
-const listData = [
-  {
-    zigzagProductId: '1',
-    productName: '짱 쩌는 바지',
-    optionOrderInfos: [
-      {
-        optionName: '색상: 진청 / size : M',
-        count: 9,
-        oldestOrderDateTime: '2024-01-11T07:25:59.322Z',
-        inventoryQuantity: 1,
-        orderInfos: [
-          {
-            orderNumber: '111111111',
-            orderItemNumber: '111111111',
-            orderQuantity: 5,
-            orderDateTime: '2024-01-11T07:25:59.322Z',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    zigzagProductId: '2',
-    productName: '도라방스 치마',
-    optionOrderInfos: [
-      {
-        optionName: '색상: 진청 / size : M',
-        count: 9,
-        oldestOrderDateTime: '2024-01-11T07:25:59.322Z',
-        inventoryQuantity: 1,
-        orderInfos: [
-          {
-            orderNumber: '111111111',
-            orderItemNumber: '111111111',
-            orderQuantity: 5,
-            orderDateTime: '2024-01-11T07:25:59.322Z',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    zigzagProductId: '3',
-    productName: '천지개벽 블라우스',
-    optionOrderInfos: [
-      {
-        optionName: '색상: 진청 / size : M',
-        count: 9,
-        oldestOrderDateTime: '2024-01-11T07:25:59.322Z',
-        inventoryQuantity: 1,
-        orderInfos: [
-          {
-            orderNumber: '111111111',
-            orderItemNumber: '111111111',
-            orderQuantity: 5,
-            orderDateTime: '2024-01-11T07:25:59.322Z',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    zigzagProductId: '4',
-    productName: '개졸귀탱 떡볶이 코트',
-    optionOrderInfos: [
-      {
-        optionName: '색상: 진청 / size : M',
-        count: 9,
-        oldestOrderDateTime: '2024-01-11T07:25:59.322Z',
-        inventoryQuantity: 1,
-        orderInfos: [
-          {
-            orderNumber: '111111111',
-            orderItemNumber: '111111111',
-            orderQuantity: 5,
-            orderDateTime: '2024-01-11T07:25:59.322Z',
-          },
-        ],
-      },
-    ],
-  },
-];
-
 const MainScreen = () => {
   const us = new userService();
   const navigate = useNavigate();
@@ -107,23 +24,42 @@ const MainScreen = () => {
     }
   };
 
-  const getOrderedList = async () => {
-    const startDateStr =
-      String(startDate.getFullYear()) +
-      '-' +
-      String(startDate.getMonth() + 1) +
-      '-' +
-      String(startDate.getDate());
-    const endDateStr =
-      String(endDate.getFullYear()) +
-      '-' +
-      String(endDate.getMonth() + 1) +
-      '-' +
-      String(endDate.getDate());
+  const checkDate = (n: string) => {
+    if (n.length === 1) return `0${n}`;
+    else return n;
+  };
 
-    //const response = orderListServiceClass.getOrderList(startDateStr,endDateStr);
-    //console.log(response);
-    setOrderList(listData);
+  const returnDate = (fullYear: number, month: number, date: number) => {
+    return (
+      String(fullYear) +
+      '-' +
+      checkDate(String(month)) +
+      '-' +
+      checkDate(String(date))
+    );
+  };
+
+  const getOrderedList = async () => {
+    const startDateStr = returnDate(
+      startDate.getFullYear(),
+      startDate.getMonth() + 1,
+      startDate.getDate()
+    );
+    const endDateStr = returnDate(
+      endDate.getFullYear(),
+      endDate.getMonth() + 1,
+      endDate.getDate()
+    );
+
+    try {
+      const data = await (
+        await orderListServiceClass.getOrderList(startDateStr, endDateStr)
+      ).data.productOptionOrderInfos;
+
+      setOrderList(data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -144,22 +80,34 @@ const MainScreen = () => {
           검색하기
         </button>
         <table>
-          <th>제품 아이디</th>
-          <th>제품명</th>
-          <th>상품 옵션</th>
-          <th>가장 오래된 주문</th>
-          <th>수량</th>
-          <th>재고 수량</th>
-          {orderList
+          <thead>
+            <tr key='tableHead'>
+              <th key='id'>제품 아이디</th>
+              <th key='name'>제품명</th>
+              <th key='option'>상품 옵션</th>
+              <th key='orderDate'>가장 오래된 주문</th>
+              <th key='count'>수량</th>
+              <th key='inventory'>재고 수량</th>
+            </tr>
+          </thead>
+          {orderList.length !== 0
             ? orderList.map((item) => (
-                <tr>
-                  <td>{item.zigzagProductId}</td>
-                  <td>{item.productName}</td>
-                  <td>{item.optionOrderInfos[0].optionName}</td>
-                  <td>{item.optionOrderInfos[0].oldestOrderDateTime}</td>
-                  <td>{item.optionOrderInfos[0].count}</td>
-                  <td>{item.optionOrderInfos[0].inventoryQuantity}</td>
-                </tr>
+                <tbody>
+                  <tr key={item.zigzagProductId}>
+                    <td key='id'>{item.zigzagProductId}</td>
+                    <td key='name'>{item.productName}</td>
+                    <td key='optionName'>
+                      {item.optionOrderInfos[0].optionName}
+                    </td>
+                    <td key='dateTime'>
+                      {item.optionOrderInfos[0].oldestOrderDateTime}
+                    </td>
+                    <td key='count'>{item.optionOrderInfos[0].count}</td>
+                    <td key='inventoryQuantity'>
+                      {item.optionOrderInfos[0].inventoryQuantity}
+                    </td>
+                  </tr>
+                </tbody>
               ))
             : null}
         </table>
