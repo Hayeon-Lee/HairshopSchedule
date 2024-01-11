@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userService } from '../../services/userService';
-import './LoginScreenCss.css';
+import styles from './LoginScreenCss.module.css';
 import * as React from 'react';
 
 const LoginScreen = () => {
@@ -51,12 +51,12 @@ const LoginScreen = () => {
   }, [userID, userPW]);
 
   return (
-    <div className='Container'>
-      <div className='Wrapper'>
+    <div className={styles.Container}>
+      <div className={styles.Wrapper}>
         <h1>Login</h1>
         <h4>지그재그 파트너센터와 동일한 아이디, 비밀번호를 입력해 주세요.</h4>
         <input
-          className='input'
+          className={styles.input}
           type='text'
           name='id'
           placeholder='아이디'
@@ -64,7 +64,7 @@ const LoginScreen = () => {
           onChange={handleChange}
         />
         <input
-          className='input'
+          className={styles.input}
           type='text'
           name='pw'
           value={userPW}
@@ -72,22 +72,30 @@ const LoginScreen = () => {
           onChange={handleChange}
         />
         {errorMsg === null ? null : (
-          <span className='errorMsg'> {errorMsg}</span>
+          <span className={styles.errorMsg}> {errorMsg}</span>
         )}
         {btnAvailable === true ? (
-          <button className='LoginBtn' type='button' onClick={successLogin}>
+          <button
+            className={styles.LoginBtn}
+            type='button'
+            onClick={successLogin}
+          >
             로그인
           </button>
         ) : (
           <button
-            className='LoginBtnFail'
+            className={styles.LoginBtnFail}
             type='button'
             onClick={() => setErrorMsg('로그인 정보를 입력하세요.')}
           >
             로그인
           </button>
         )}
-        <button className='MoveToSignUp' type='button' onClick={moveToSignUp}>
+        <button
+          className={styles.MoveToSignUp}
+          type='button'
+          onClick={moveToSignUp}
+        >
           회원가입하기
         </button>
       </div>
