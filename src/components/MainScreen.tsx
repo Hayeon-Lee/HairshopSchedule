@@ -80,9 +80,7 @@ const MainScreen = () => {
     setOrderListCount(orderList.length);
   }, [orderList]);
 
-  useEffect(() => {
-    console.log(toggleStatus);
-  }, [toggleStatus]);
+  useEffect(() => {}, [toggleStatus]);
 
   return (
     <div className=''>
