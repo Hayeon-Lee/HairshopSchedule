@@ -137,7 +137,11 @@ const MainScreen = () => {
                     </td>
                   </tr>
                   {toggleStatus[index] ? (
-                    <DetailToggle list={item.optionOrderInfos[0].orderInfos} />
+                    <td colSpan={7}>
+                      <DetailToggle
+                        list={item.optionOrderInfos[0].orderInfos}
+                      />
+                    </td>
                   ) : null}
                 </tbody>
               ))
