@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userService } from '../../services/userService';
-//import styles from './LoginScreenCss.module.css';
 import styled from 'styled-components';
 import * as React from 'react';
 
@@ -25,6 +24,10 @@ const Wrapper = styled(Frame)`
 
 const H1 = styled.h1`
   color: #182134;
+  font-family: 'TheJamsil5Bold';
+  font-size: 4vw;
+  font-style: normal;
+  font-weight: 400;
   line-height: normal;
 `;
 const H4 = styled.h4`
@@ -32,6 +35,10 @@ const H4 = styled.h4`
   line-height: normal;
   margin-top: 0.1vh;
   padding-bottom: 0.2vh;
+  font-family: 'TheJamsil5Bold';
+  font-size: 1vw;
+  font-style: normal;
+  font-weight: 400;
 `;
 
 const Input = styled.input`
@@ -54,6 +61,8 @@ const ErrorMsg = styled.span`
   color: #f67070;
   font-size: 1vw;
   font-style: normal;
+  font-family: 'TheJamsil5Bold';
+  font-weight: 100;
 `;
 
 const LoginBtn = styled.button<{
