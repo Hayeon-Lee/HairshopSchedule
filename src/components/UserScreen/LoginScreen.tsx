@@ -2,7 +2,26 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userService } from '../../services/userService';
 import styles from './LoginScreenCss.module.css';
+import styled from 'styled-components';
 import * as React from 'react';
+
+const Frame = styled.div`
+  background-color: white;
+  display: flex;
+  align-items: center;
+`;
+const Container = styled(Frame)`
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  overflow: hidden;
+`;
+const Wrapper = styled(Frame)`
+  width: 90vw;
+  height: 80vh;
+  margin: 0 auto;
+  flex-direction: column;
+`;
 
 const LoginScreen = () => {
   const navigate = useNavigate();
