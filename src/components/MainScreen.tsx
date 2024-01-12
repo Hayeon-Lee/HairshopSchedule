@@ -15,6 +15,8 @@ const MainScreen = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [orderList, setOrderList] = useState([]);
+  const [orderListCount, setOrderListCount] = useState(0);
+  const [toggleStatus, setToggleStatus] = useState([]);
 
   const logout = async () => {
     const logoutInfo = await us.deleteInfo();
@@ -57,6 +59,8 @@ const MainScreen = () => {
       ).data.productOptionOrderInfos;
 
       setOrderList(data);
+      setOrderListCount(orderList.length);
+      setToggleStatus(Array.from({ length: orderList.length }, (i) => false));
     } catch (e) {
       console.log(e);
     }
