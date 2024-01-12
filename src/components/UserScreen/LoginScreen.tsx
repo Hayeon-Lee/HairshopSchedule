@@ -43,6 +43,7 @@ const Input = styled.input`
   font-size: 1.2vw;
   margin-bottom: 2vh;
   margin-top: 1vh;
+  font-family: 'TheJamsil5Bold';
   &:focus {
     outline: none;
     border: 2px solid #ff588e;
@@ -66,6 +67,7 @@ const LoginBtn = styled.button<{
   border: none;
   margin-top: 4vh;
   font-size: 1vw;
+  font-family: 'TheJamsil5Bold';
 
   background: ${(props) => props.backgroundColor};
   border-color: ${(props) => props.borderColor};
@@ -86,6 +88,7 @@ const SignUpBtn = styled.button`
   line-height: normal;
   border: none;
   background-color: white;
+  font-family: 'TheJamsil5Bold';
 `;
 
 const LoginScreen = () => {
