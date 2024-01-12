@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,6 +6,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { orderListService } from '../services/orderListService';
 import { userService } from '../services/userService';
+
+import DetailToggle from '../utils/DetailToggle';
 
 const MainScreen = () => {
   const us = new userService();
@@ -59,12 +61,28 @@ const MainScreen = () => {
       ).data.productOptionOrderInfos;
 
       setOrderList(data);
-      setOrderListCount(orderList.length);
-      setToggleStatus(Array.from({ length: orderList.length }, (i) => false));
     } catch (e) {
       console.log(e);
     }
   };
+
+  const detailToggleClick = (index) => {
+    let copy = [...toggleStatus];
+    copy[index] = !copy[index];
+    setToggleStatus(copy);
+  };
+
+  useEffect(() => {
+    setToggleStatus(Array.from({ length: orderList.length }, (i) => false));
+  }, [orderListCount]);
+
+  useEffect(() => {
+    setOrderListCount(orderList.length);
+  }, [orderList]);
+
+  useEffect(() => {
+    console.log(toggleStatus);
+  }, [toggleStatus]);
 
   return (
     <div className=''>
@@ -86,6 +104,7 @@ const MainScreen = () => {
         <table>
           <thead>
             <tr key='tableHead'>
+              <th key='button'>상세보기</th>
               <th key='id'>제품 아이디</th>
               <th key='name'>제품명</th>
               <th key='option'>상품 옵션</th>
@@ -95,9 +114,17 @@ const MainScreen = () => {
             </tr>
           </thead>
           {orderList.length !== 0
-            ? orderList.map((item) => (
+            ? orderList.map((item, index) => (
                 <tbody>
                   <tr key={item.zigzagProductId}>
+                    <td key='button'>
+                      <button
+                        type='button'
+                        onClick={() => detailToggleClick(index)}
+                      >
+                        상세보기
+                      </button>
+                    </td>
                     <td key='id'>{item.zigzagProductId}</td>
                     <td key='name'>{item.productName}</td>
                     <td key='optionName'>
@@ -111,6 +138,9 @@ const MainScreen = () => {
                       {item.optionOrderInfos[0].inventoryQuantity}
                     </td>
                   </tr>
+                  {toggleStatus[index] ? (
+                    <DetailToggle list={item.optionOrderInfos[0].orderInfos} />
+                  ) : null}
                 </tbody>
               ))
             : null}
