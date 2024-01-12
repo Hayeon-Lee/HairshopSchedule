@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userService } from '../../services/userService';
-import styles from './LoginScreenCss.module.css';
+//import styles from './LoginScreenCss.module.css';
 import styled from 'styled-components';
 import * as React from 'react';
 
@@ -135,55 +135,49 @@ const LoginScreen = () => {
   }, [userID, userPW]);
 
   return (
-    <div className={styles.Container}>
-      <div className={styles.Wrapper}>
-        <h1>Login</h1>
-        <h4>지그재그 파트너센터와 동일한 아이디, 비밀번호를 입력해 주세요.</h4>
-        <input
-          className={styles.input}
+    <Container>
+      <Wrapper>
+        <H1>Login</H1>
+        <H4>지그재그 파트너센터와 동일한 아이디, 비밀번호를 입력해 주세요.</H4>
+        <Input
           type='text'
           name='id'
           placeholder='아이디'
           value={userID}
           onChange={handleChange}
-        />
-        <input
-          className={styles.input}
+        ></Input>
+        <Input
           type='text'
           name='pw'
           value={userPW}
           placeholder='비밀번호'
           onChange={handleChange}
-        />
-        {errorMsg === null ? null : (
-          <span className={styles.errorMsg}> {errorMsg}</span>
-        )}
+        ></Input>
+        {errorMsg === null ? null : <ErrorMsg>{errorMsg}</ErrorMsg>}
         {btnAvailable === true ? (
-          <button
-            className={styles.LoginBtn}
+          <LoginBtn
+            backgroundColor='#ff588e'
+            borderColor='#ff588e'
             type='button'
             onClick={successLogin}
           >
             로그인
-          </button>
+          </LoginBtn>
         ) : (
-          <button
-            className={styles.LoginBtnFail}
+          <LoginBtn
+            backgroundColor='#c6c6c6'
+            borderColor='#c6c6c6'
             type='button'
             onClick={() => setErrorMsg('로그인 정보를 입력하세요.')}
           >
             로그인
-          </button>
+          </LoginBtn>
         )}
-        <button
-          className={styles.MoveToSignUp}
-          type='button'
-          onClick={moveToSignUp}
-        >
+        <SignUpBtn type='button' onClick={moveToSignUp}>
           회원가입하기
-        </button>
-      </div>
-    </div>
+        </SignUpBtn>
+      </Wrapper>
+    </Container>
   );
 };
 
