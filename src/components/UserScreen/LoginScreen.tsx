@@ -23,6 +23,71 @@ const Wrapper = styled(Frame)`
   flex-direction: column;
 `;
 
+const H1 = styled.h1`
+  color: #182134;
+  line-height: normal;
+`;
+const H4 = styled.h4`
+  color: #000;
+  line-height: normal;
+  margin-top: 0.1vh;
+  padding-bottom: 0.2vh;
+`;
+
+const Input = styled.input`
+  width: 30vw;
+  height: 9vh;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 2px solid #c6c6c6;
+  font-size: 1.2vw;
+  margin-bottom: 2vh;
+  margin-top: 1vh;
+  &:focus {
+    outline: none;
+    border: 2px solid #ff588e;
+  }
+`;
+
+const ErrorMsg = styled.span`
+  color: #f67070;
+  font-size: 1vw;
+  font-style: normal;
+`;
+
+const LoginBtn = styled.button<{
+  backgroundColor: string;
+  borderColor: string;
+}>`
+  width: 30vw;
+  height: 9vh;
+  flex-shrink: 0;
+  border-radius: 15px;
+  border: none;
+  margin-top: 4vh;
+  font-size: 1vw;
+
+  background: ${(props) => props.backgroundColor};
+  border-color: ${(props) => props.borderColor};
+`;
+
+const SignUpBtn = styled.button`
+  margin-top: 1vh;
+  display: flex;
+  width: 20vw;
+  height: 5vh;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #3a4f7a;
+  text-align: center;
+  font-size: 1vw;
+  font-weight: 300;
+  font-style: normal;
+  line-height: normal;
+  border: none;
+  background-color: white;
+`;
+
 const LoginScreen = () => {
   const navigate = useNavigate();
   const [userID, setUserID] = useState('');
